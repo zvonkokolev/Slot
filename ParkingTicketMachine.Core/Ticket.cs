@@ -21,7 +21,7 @@ namespace ParkingTicketMachine.Core
 		public bool Check { get => _check; set => _check = value; }
 		public override string ToString()
 		{
-			return $"{_strasse} {_startZeit.ToShortTimeString()} {_bezahltePreis}";
+			return $"Automat: {_strasse} Startzeit: {_startZeit.ToShortTimeString()} \nBezahlt: {(double)_bezahltePreis / 100} € Endzeit: {_endZeit.ToShortTimeString()}";
 		}
 	}
 }

@@ -7,7 +7,7 @@ namespace ParkingTicketMachine.Wpf
 	/// <summary>
 	/// Interaction logic for SlotMachineWindow.xaml
 	/// </summary>
-	public partial class SlotMachineWindow
+	public partial class SlotMachineWindow 
 	{
 		//fields
 		private readonly SlotMachine _slotMachine;
@@ -15,12 +15,6 @@ namespace ParkingTicketMachine.Wpf
 		private DateTime _endZeit;
 		//properties
 		public SlotMachine SlotMachine => _slotMachine;
-		public event EventHandler<Ticket> TicketGekauft;
-
-		//public SlotMachineWindow(string name, EventHandler<Ticket> ticketReady) : this(name)
-		//{
-		//	TicketGekauft += ticketReady;
-		//}
 		public SlotMachineWindow(string name)
 		{
 			_slotMachine = new SlotMachine(name);
@@ -50,7 +44,6 @@ namespace ParkingTicketMachine.Wpf
 		private void ButtonPrintTicket_Click(object sender, RoutedEventArgs e)
 		{
 			Ticket ticket = new Ticket(_startZeit, _endZeit, _slotMachine.SumActualInput, this.Title);
-
 			if (ticket.Check)
 			{
 				MeldeAnZentrale(ticket);
@@ -58,7 +51,7 @@ namespace ParkingTicketMachine.Wpf
 		}
 		private void MeldeAnZentrale(Ticket gekaufteTicket)
 		{
-			TicketGekauft?.Invoke(this, gekaufteTicket);
+			MessageBox.Show(gekaufteTicket.ToString());
 		}
 
 		private void ButtonCancel_Click(object sender, RoutedEventArgs e)

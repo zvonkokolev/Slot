@@ -1,7 +1,5 @@
 ﻿using ParkingTicketMachine.Core;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 namespace ParkingTicketMachine.Wpf
 {
@@ -10,12 +8,9 @@ namespace ParkingTicketMachine.Wpf
 	/// </summary>
 	public partial class MainWindow
 	{
-		public event EventHandler<SlotMachineWindow> AutomatDisplayErstellt;
 		protected virtual void ErzeugeNeuenAutomat(String strassenName)
 		{
-			SlotMachineWindow slotMachineWindow = new SlotMachineWindow(strassenName);
-
-			AutomatDisplayErstellt?.Invoke(this, slotMachineWindow);
+			_ = new SlotMachineWindow(strassenName);
 		}
 
 		public MainWindow()
@@ -26,17 +21,17 @@ namespace ParkingTicketMachine.Wpf
 
 		private void Window_Initialized(object sender, EventArgs e)
 		{
-			ErzeugeNeuenAutomat("Limmesstrasse");
-			ErzeugeNeuenAutomat("Landstrasse");
+			_ = new SlotMachineWindow("Limmesstrasse");
+			_ = new SlotMachineWindow("Landstrasse");
 		}
 
 		private void ButtonNew_Click(object sender, RoutedEventArgs e)
 		{
 			ErzeugeNeuenAutomat(TextBoxAddress.Text);
 		}
-		public void BeimGekaufterTicket(object sender, Ticket ticket)
+		public void BeimGekaufterTicket(object sender, Ticket e)
 		{
-			TextBlockLog.Text = ticket.ToString();
+			TextBlockLog.Text = e.ToString();
 		}
 	}
 }
