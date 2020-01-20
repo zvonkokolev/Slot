@@ -19,7 +19,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <DockPanel Margin="3,3,2.709,3.255" Grid.ColumnSpan="2">
-            <Label Content="Adresse des Parkscheiautomaten:" Margin="3" VerticalAlignment="Center"/>
+            <Label Content="Adresse des Parkscheinautomaten:" Margin="3" VerticalAlignment="Center"/>
             <TextBox x:Name="TextBoxAddress" Margin="3" VerticalAlignment="Center" Width="250"/>
             <Button x:Name="ButtonNew" Content="New SlotMachine" Margin="5" VerticalAlignment="Center" Width="120" Height="30" DockPanel.Dock="Right" Click="ButtonNew_Click"/>
         </DockPanel>

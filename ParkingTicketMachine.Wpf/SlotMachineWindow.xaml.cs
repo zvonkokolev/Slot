@@ -43,24 +43,30 @@ namespace ParkingTicketMachine.Wpf
 		public EventHandler<TicketVerkauftEventArgs> TicketVerkauftInfo;
 		private void ButtonPrintTicket_Click(object sender, RoutedEventArgs e)
 		{
-			Ticket ticket = new Ticket(_startZeit, _endZeit, _slotMachine.SumActualInput, this.Title);
-			if (ticket.Check)
+			if(ListBoxCoins.IsEnabled && ListBoxCoins.SelectedItem != null)
 			{
-				SlotMachine.PrintTicket(ticket);
-				MeldeAnZentrale(ticket);
+				Ticket ticket = new Ticket(_startZeit, _endZeit, _slotMachine.SumActualInput, this.Title);
+				if (ticket.Check)
+				{
+					SlotMachine.PrintTicket(ticket);
+					MeldeAnZentrale(ticket);
+				}
 			}
 		}
 		protected virtual void MeldeAnZentrale(Ticket gekaufteTicket)
 		{
 			TicketVerkauftInfo?.Invoke(this, new TicketVerkauftEventArgs(gekaufteTicket));
-			MessageBox.Show(gekaufteTicket.ToString());
+			//MessageBox.Show(gekaufteTicket.ToString());
 		}
 
 		private void ButtonCancel_Click(object sender, RoutedEventArgs e)
 		{
-			int retour = SlotMachine.CancelOrder();
-			double ret = (double)retour / 100;
-			MessageBox.Show($"Rückgabe: {ret.ToString()} Euro.");
+			if (ListBoxCoins.IsEnabled && ListBoxCoins.SelectedItem != null && !ButtonPrintTicket.IsInitialized )
+			{
+				int retour = SlotMachine.CancelOrder();
+				double ret = (double)retour / 100;
+				MessageBox.Show($"Rückgabe: {ret.ToString()} Euro.");
+			}
 		}
 	}
 	public class TicketVerkauftEventArgs : EventArgs
