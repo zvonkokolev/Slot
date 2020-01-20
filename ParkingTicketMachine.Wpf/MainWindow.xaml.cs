@@ -10,7 +10,8 @@ namespace ParkingTicketMachine.Wpf
 	{
 		protected virtual void ErzeugeNeuenAutomat(String strassenName)
 		{
-			_ = new SlotMachineWindow(strassenName);
+			SlotMachineWindow smw = new SlotMachineWindow(strassenName);
+			smw.TicketVerkauftInfo += WennTicketVerkauft;
 		}
 
 		public MainWindow()
@@ -21,17 +22,19 @@ namespace ParkingTicketMachine.Wpf
 
 		private void Window_Initialized(object sender, EventArgs e)
 		{
-			_ = new SlotMachineWindow("Limmesstrasse");
-			_ = new SlotMachineWindow("Landstrasse");
+			SlotMachineWindow smw1 = new SlotMachineWindow("Limmesstrasse");
+			smw1.TicketVerkauftInfo += WennTicketVerkauft;
+			SlotMachineWindow smw2 = new SlotMachineWindow("Landstrasse");
+			smw2.TicketVerkauftInfo += WennTicketVerkauft;
 		}
 
 		private void ButtonNew_Click(object sender, RoutedEventArgs e)
 		{
 			ErzeugeNeuenAutomat(TextBoxAddress.Text);
 		}
-		public void BeimGekaufterTicket(object sender, Ticket e)
+		public void WennTicketVerkauft(object sender, TicketVerkauftEventArgs e)
 		{
-			TextBlockLog.Text = e.ToString();
+			TextBlockLog.Text = e.GekaufteTicket.ToString();
 		}
 	}
 }

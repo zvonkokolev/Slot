@@ -24,7 +24,7 @@ namespace ParkingTicketMachine.Wpf
 		}
 		private void ButtonInsertCoin_Click(object sender, RoutedEventArgs e)
 		{
-			if (ListBoxCoins.IsEnabled)
+			if (ListBoxCoins.IsEnabled && ListBoxCoins.SelectedItem != null)
 			{
 				string text;
 				string[] parts = ListBoxCoins.SelectedItem.ToString().Split(' ');
@@ -40,17 +40,19 @@ namespace ParkingTicketMachine.Wpf
 				}
 			}
 		}
-
+		public EventHandler<TicketVerkauftEventArgs> TicketVerkauftInfo;
 		private void ButtonPrintTicket_Click(object sender, RoutedEventArgs e)
 		{
 			Ticket ticket = new Ticket(_startZeit, _endZeit, _slotMachine.SumActualInput, this.Title);
 			if (ticket.Check)
 			{
+				SlotMachine.PrintTicket(ticket);
 				MeldeAnZentrale(ticket);
 			}
 		}
-		private void MeldeAnZentrale(Ticket gekaufteTicket)
+		protected virtual void MeldeAnZentrale(Ticket gekaufteTicket)
 		{
+			TicketVerkauftInfo?.Invoke(this, new TicketVerkauftEventArgs(gekaufteTicket));
 			MessageBox.Show(gekaufteTicket.ToString());
 		}
 
@@ -60,5 +62,16 @@ namespace ParkingTicketMachine.Wpf
 			double ret = (double)retour / 100;
 			MessageBox.Show($"Rückgabe: {ret.ToString()} Euro.");
 		}
+	}
+	public class TicketVerkauftEventArgs : EventArgs
+	{
+		private Ticket _gekaufteTicket;
+
+		public TicketVerkauftEventArgs(Ticket gekaufteTicket)
+		{
+			GekaufteTicket = gekaufteTicket;
+		}
+
+		public Ticket GekaufteTicket { get => _gekaufteTicket; set => _gekaufteTicket = value; }
 	}
 }

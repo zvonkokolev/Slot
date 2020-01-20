@@ -77,5 +77,9 @@ namespace ParkingTicketMachine.Core
 			SumActualInput = 0;
 			return rueckgabe;
 		}
+		public static void PrintTicket(Ticket ticket)
+		{
+			Console.WriteLine(ticket.ToString());
+		}
 	}
 }
